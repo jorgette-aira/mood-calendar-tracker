@@ -1,0 +1,197 @@
+/* Base container centering environment overrides */
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #121214; 
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Courier New', Courier, monospace;
+  user-select: none;
+}
+
+/* Force nearest-neighbor sharp rendering for retro assets */
+.pixel-art {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+/* Main Application container wrapped using your calendar asset canvas */
+.app-container {
+  width: 600px;   
+  height: 620px;  
+  position: relative;
+  
+  /* Background Frame Mapping Setup */
+  background-image: url("/src/assets/ui/calendar.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  
+  /* Inner spacing buffer zone so text sits inside your drawn frames safely */
+  padding:101px 28px 28px 28px; 
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Top Right Window Control Layout */
+.window-controls {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  display: flex;
+  gap: 8px;
+}
+
+.info-position {
+  top: 28px;   
+  left: 26px;  
+}
+
+.close-position {
+  top: 28px;   
+  right: 26px; 
+}
+
+
+.icon-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  
+  position: absolute; 
+  z-index: 10; 
+}
+
+.icon-btn img {
+  width: 50px;
+  height: 50px;
+}
+
+/* Header Text Adjustments */
+.pixel-header {
+  text-align: center;
+  margin-bottom: 16px;
+  margin-top: 10px;
+}
+
+.pixel-header h1 {
+  margin: 0;
+  font-size: 22px;
+  color: #ffffff;
+  text-shadow: 2px 2px 0px #000000;
+  letter-spacing: 1px;
+}
+
+/* Layout Frameworks mapping 7 uniform columns */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  
+  /* Fine-tuning spacing variables */
+  gap: 7px;          
+  margin-left: 70px;
+  width: 405px;   
+  margin-top: 5px;   
+}
+.weekdays-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 50px;       
+  margin-left: 85px; 
+  width: 58px;       
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #000;       
+  font-size: 14px;
+  text-align: center;
+}
+
+.weekday-lbl {
+  margin-top: 41px;
+}
+
+/* Individual Calendar Tile Slots */
+.calendar-tile {
+  background: transparent;
+  border: none;        
+  aspect-ratio: 0;
+  cursor: pointer;
+  padding: 3px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.calendar-tile:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+.day-number {
+  font-size: 12px;
+  align-self: flex-start;
+  color: #333;             /* Dark grey numbers to read clearly over the tan blocks */
+  font-weight: bold;
+  margin-left: 2px;
+  margin-top: 2px;
+}
+
+.tile-mood {
+  width: 32px;
+  height: 32px;
+  margin-bottom: auto;
+  margin-top: auto;
+}
+
+/* Bottom Selector Component Layout */
+.mood-palette-box {
+  margin-top: auto; 
+  padding-top: 14px;
+  text-align: center;
+}
+
+.mood-palette-box h3 {
+  margin: 0 0 10px 0;
+  font-size: 14px;
+  color: #a1a1aa;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 0px #000;
+}
+
+.palette-options {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.palette-tile {
+  background: #27272a;
+  border: 2px solid #52525b;
+  padding: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.palette-tile:hover, .palette-tile.active {
+  background: #3f3f46;
+  border-color: #ffffff;
+}
+
+.palette-tile img {
+  width: 26px;
+  height: 26px;
+}
