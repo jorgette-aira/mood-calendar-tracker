@@ -4,7 +4,7 @@ html, body, #root {
   padding: 0;
   width: 100%;
   height: 100%;
-  background-color: #121214; 
+  background-color: #568d6777; 
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -59,6 +59,16 @@ html, body, #root {
   right: 26px; 
 }
 
+.prev-position {
+  top: 50px;
+  left: 150px;
+}
+
+.next-position {
+  top: 50px;
+  right: 150px;
+}
+
 
 .icon-btn {
   background: transparent;
@@ -78,9 +88,10 @@ html, body, #root {
 
 /* Header Text Adjustments */
 .pixel-header {
+  gap: 20px;
   text-align: center;
   margin-bottom: 16px;
-  margin-top: 10px;
+  margin-top: -40px;
 }
 
 .pixel-header h1 {
@@ -105,6 +116,7 @@ html, body, #root {
 .weekdays-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
+  margin-top: 52px;
   gap: 50px;       
   margin-left: 85px; 
   width: 58px;       
@@ -140,7 +152,7 @@ html, body, #root {
 .day-number {
   font-size: 12px;
   align-self: flex-start;
-  color: #333;             /* Dark grey numbers to read clearly over the tan blocks */
+  color: #333;            
   font-weight: bold;
   margin-left: 2px;
   margin-top: 2px;
@@ -194,4 +206,126 @@ html, body, #root {
 .palette-tile img {
   width: 26px;
   height: 26px;
+}
+
+/* Dark semi-transparent backdrop covering the app frame */
+.popup-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+/* Retro Pop-Up Menu Box */
+.popup-card {
+  width: 320px;
+  background-color: #4a3b32;
+  border: 4px solid #ffffff;
+  padding: 20px;
+  box-shadow: 6px 6px 0px #000000;
+  color: #ffffff;
+  font-family: 'Courier New', Courier, monospace;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px dashed #ffffff;
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+}
+
+.popup-header h2 {
+  margin: 0;
+  font-size: 16px;
+  color: #ffde59;
+  text-shadow: 1px 1px 0px #000;
+}
+
+.popup-close-x {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.popup-close-x:hover {
+  color: #ffde59;
+}
+
+.popup-body {
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.popup-body ul {
+  padding-left: 18px;
+  margin: 8px 0;
+}
+
+.popup-action-btn {
+  width: 100%;
+  margin-top: 14px;
+  background-color: #27272a;
+  border: 2px solid #ffffff;
+  color: #ffffff;
+  padding: 8px;
+  font-family: inherit;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 2px 2px 0px #000;
+}
+
+.popup-action-btn:hover {
+  background-color: #ffde59;
+  color: #000000;
+}
+
+.popup-legend-title {
+  margin-top: 12px;
+  margin-bottom: 6px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.4);
+  padding-top: 8px;
+  font-size: 13px;
+}
+
+/* 2-Column Grid for Legend Items */
+.popup-mood-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px 12px;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 8px;
+  border-radius: 4px;
+}
+
+/* Individual Legend Row */
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legend-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.legend-label {
+  font-size: 11px;
+  text-transform: capitalize;
+  color: #ffde59;
 }

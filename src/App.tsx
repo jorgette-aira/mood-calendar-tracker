@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./App.css";
+import { getCurrentWindow } from "@tauri-apps/api/window";
 
 // 1. Strict TypeScript definition matching your hand-drawn mood assets
 type MoodType = "happy" | "sad" | "angry" | "anxiety" | "ennui" | "in love";
@@ -20,15 +21,32 @@ const moodAssets: Record<MoodType, string> = {
 };
 
 export default function App() {
-  // Generate a standard 30-day view for testing (June 2026)
-  const initialDays: DayLog[] = Array.from({ length: 30 }, (_, i) => ({
-    dayNumber: i + 1,
-  }));
-
-  const [days, setDays] = useState<DayLog[]>(initialDays);
+  // STATE
+  const [currentDate, setCurrentDate] = useState<Date>(new Date(2026, 5, 1));
+  const [isInfoOpen, setIsInfoOpen] = useState<boolean>(false);
   const [selectedMood, setSelectedMood] = useState<MoodType>("happy");
+  const [days, setDays] = useState<DayLog[]>(
+    Array.from({ length: 30 }, (_, i) => ({ dayNumber: i + 1 }))
+  );
 
-  // Assign the currently active pixel sprite to the clicked calendar day
+  // BUTTONS
+
+  // Info Button
+  const toggleInfoMenu = () => {
+    setIsInfoOpen((prev) => !prev);
+  };
+
+  // Prev Month Button
+  const handlePrevMonth = () => {
+    setCurrentDate((prev) => new Date(prev.getFullYear(), prev.getMonth() - 1, 1));
+  };
+
+  // Next Month Button
+  const handleNextMonth = () => {
+    setCurrentDate((prev) => new Date(prev.getFullYear(), prev.getMonth() + 1, 1));
+  };
+
+  // Day click handler
   const handleDayClick = (dayNumber: number) => {
     setDays((prevDays) =>
       prevDays.map((d) =>
@@ -36,25 +54,32 @@ export default function App() {
       )
     );
   };
+  
+  // Format month title dynamically
+  const formattedMonth = currentDate.toLocaleString("default", {
+    month: "long",
+    year: "numeric",
+  });
+
 
   return (
   <div className="app-container">
-    {/* Separated and positioned independently to align with your background squares */}
-    <button className="icon-btn info-position" title="Info">
+    <button className="icon-btn info-position" title="Info" onClick={toggleInfoMenu}>
       <img src="/src/assets/ui/info.png" alt="Info" className="pixel-art" />
     </button>
     
-    <button className="icon-btn close-position" title="Close">
+    <button className="icon-btn close-position" title="Close" onClick={handleClose}>
       <img src="/src/assets/ui/close.png" alt="Close" className="pixel-art" />
     </button>
 
     <header className="pixel-header">
-      <h1>June 2026</h1>
-      <button className="icon-btn prev-postion" title="Prev">
+      <button className="icon-btn prev-position" title="Prev" onClick={handlePrevMonth}>
         <img src="/src/assets/ui/prev.png" alt="Prev" className="pixel-art"/>
       </button>
 
-      <button className="icon-btn next-position" title="Next">
+      <h1>{formattedMonth}</h1>
+      
+      <button className="icon-btn next-position" title="Next" onClick={handleNextMonth}>
         <img src="/src/assets/ui/next.png" alt="Next" className="pixel-art"/>
       </button>
     </header>
@@ -102,6 +127,35 @@ export default function App() {
           ))}
         </div>
       </div>
+      {isInfoOpen && (
+        <div className="popup-overlay" onClick={toggleInfoMenu}>
+          <div className="popup-card" onClick={(e) => e.stopPropagation()}>
+            <div className="popup-header">
+              <h2>Pixel Mood Tracker</h2>
+              <button className="popup-close-x" onClick={toggleInfoMenu}>×</button>
+            </div>
+            <div className="popup-body">
+            <p><b>How to Use:</b></p>
+            <ul>
+              <li>Pick a mood heart from the bottom palette.</li>
+              <li>Click any date box to log your daily stamp!</li>
+              <li>Use arrows to navigate between months.</li>
+            </ul>
+
+            <div className="popup-legend-title"><b>Mood:</b></div>
+            <div className="popup-mood-grid">
+              {(Object.keys(moodAssets) as MoodType[]).map((mood) => (
+                <div key={mood} className="legend-item">
+                  <img src={moodAssets[mood]} alt={mood} className="pixel-art legend-icon" />
+                  <span className="legend-label">{mood}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+            <button className="popup-action-btn" onClick={toggleInfoMenu}>Got It!</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
