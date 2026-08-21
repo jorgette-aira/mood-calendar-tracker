@@ -10,14 +10,15 @@ interface DayLog {
   mood?: MoodType;
 }
 
-// 2. Direct mapping matching your exact file names from image_bc8f1f.png
+// 2. Direct mapping matching your exact file names
+// Note: Move assets to the public/ directory (e.g. public/assets/moods/happy.png) for production builds
 const moodAssets: Record<MoodType, string> = {
-  happy: "/src/assets/moods/happy.png",
-  sad: "/src/assets/moods/sad.png",
-  angry: "/src/assets/moods/angry.png",
-  anxiety: "/src/assets/moods/anxiety.png",
-  ennui: "/src/assets/moods/ennui.png",
-  "in love": "/src/assets/moods/in love.png",
+  happy: "src/assets/moods/happy.png",
+  sad: "src/assets/moods/sad.png",
+  angry: "src/assets/moods/angry.png",
+  anxiety: "src/assets/moods/anxiety.png",
+  ennui: "src/assets/moods/ennui.png",
+  "in love": "src/assets/moods/in love.png",
 };
 
 export default function App() {
@@ -34,6 +35,13 @@ export default function App() {
   // Info Button
   const toggleInfoMenu = () => {
     setIsInfoOpen((prev) => !prev);
+  };
+
+  // Close Application Button (Tauri window close)
+  const handleClose = () => {
+    if (typeof window !== "undefined" && "__TAURI_METADATA__" in window) {
+      getCurrentWindow().close();
+    }
   };
 
   // Prev Month Button
@@ -61,28 +69,27 @@ export default function App() {
     year: "numeric",
   });
 
-
   return (
-  <div className="app-container">
-    <button className="icon-btn info-position" title="Info" onClick={toggleInfoMenu}>
-      <img src="/src/assets/ui/info.png" alt="Info" className="pixel-art" />
-    </button>
-    
-    <button className="icon-btn close-position" title="Close" onClick={handleClose}>
-      <img src="/src/assets/ui/close.png" alt="Close" className="pixel-art" />
-    </button>
-
-    <header className="pixel-header">
-      <button className="icon-btn prev-position" title="Prev" onClick={handlePrevMonth}>
-        <img src="/src/assets/ui/prev.png" alt="Prev" className="pixel-art"/>
+    <div className="app-container">
+      <button className="icon-btn info-position" title="Info" onClick={toggleInfoMenu}>
+        <img src="src/assets/ui/info.png" alt="Info" className="pixel-art" />
       </button>
-
-      <h1>{formattedMonth}</h1>
       
-      <button className="icon-btn next-position" title="Next" onClick={handleNextMonth}>
-        <img src="/src/assets/ui/next.png" alt="Next" className="pixel-art"/>
+      <button className="icon-btn close-position" title="Close" onClick={handleClose}>
+        <img src="src/assets/ui/close.png" alt="Close" className="pixel-art" />
       </button>
-    </header>
+
+      <header className="pixel-header">
+        <button className="icon-btn prev-position" title="Prev" onClick={handlePrevMonth}>
+          <img src="src/assets/ui/prev.png" alt="Prev" className="pixel-art"/>
+        </button>
+
+        <h1>{formattedMonth}</h1>
+        
+        <button className="icon-btn next-position" title="Next" onClick={handleNextMonth}>
+          <img src="src/assets/ui/next.png" alt="Next" className="pixel-art"/>
+        </button>
+      </header>
 
       {/* Weekday Label Row */}
       <div className="weekdays-grid">
@@ -127,6 +134,7 @@ export default function App() {
           ))}
         </div>
       </div>
+      
       {isInfoOpen && (
         <div className="popup-overlay" onClick={toggleInfoMenu}>
           <div className="popup-card" onClick={(e) => e.stopPropagation()}>
@@ -135,23 +143,23 @@ export default function App() {
               <button className="popup-close-x" onClick={toggleInfoMenu}>×</button>
             </div>
             <div className="popup-body">
-            <p><b>How to Use:</b></p>
-            <ul>
-              <li>Pick a mood heart from the bottom palette.</li>
-              <li>Click any date box to log your daily stamp!</li>
-              <li>Use arrows to navigate between months.</li>
-            </ul>
+              <p><b>How to Use:</b></p>
+              <ul>
+                <li>Pick a mood heart from the bottom palette.</li>
+                <li>Click any date box to log your daily stamp!</li>
+                <li>Use arrows to navigate between months.</li>
+              </ul>
 
-            <div className="popup-legend-title"><b>Mood:</b></div>
-            <div className="popup-mood-grid">
-              {(Object.keys(moodAssets) as MoodType[]).map((mood) => (
-                <div key={mood} className="legend-item">
-                  <img src={moodAssets[mood]} alt={mood} className="pixel-art legend-icon" />
-                  <span className="legend-label">{mood}</span>
-                </div>
-              ))}
+              <div className="popup-legend-title"><b>Mood:</b></div>
+              <div className="popup-mood-grid">
+                {(Object.keys(moodAssets) as MoodType[]).map((mood) => (
+                  <div key={mood} className="legend-item">
+                    <img src={moodAssets[mood]} alt={mood} className="pixel-art legend-icon" />
+                    <span className="legend-label">{mood}</span>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
             <button className="popup-action-btn" onClick={toggleInfoMenu}>Got It!</button>
           </div>
         </div>
