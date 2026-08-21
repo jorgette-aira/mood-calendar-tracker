@@ -38,7 +38,7 @@ export default function App() {
 
   // Close Button (Tauri desktop + Vercel safe check)
   const handleClose = () => {
-    if (typeof window !== "undefined" && "__TAURI_METADATA__" in (window as Record<string, unknown>)) {
+    if (typeof window !== "undefined" && "__TAURI_METADATA__" in window) {
       getCurrentWindow().close();
     } else {
       console.log("Close clicked (Web environment)");
