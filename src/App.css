@@ -50,12 +50,12 @@ html, body, #root {
 }
 
 .info-position {
-  top: 28px;   
+  top: 36px;   
   left: 26px;  
 }
 
 .close-position {
-  top: 28px;   
+  top: 36px;   
   right: 26px; 
 }
 
@@ -108,7 +108,7 @@ html, body, #root {
   grid-template-columns: repeat(7, 1fr);
   
   /* Fine-tuning spacing variables */
-  gap: 7px;          
+  gap: 5px;          
   margin-left: 70px;
   width: 405px;   
   margin-top: 5px;   
@@ -167,13 +167,12 @@ html, body, #root {
 
 /* Bottom Selector Component Layout */
 .mood-palette-box {
-  margin-top: auto; 
-  padding-top: 14px;
+  margin-top: 24px; 
   text-align: center;
 }
 
 .mood-palette-box h3 {
-  margin: 0 0 10px 0;
+  margin: 0 0 2.5px 0;
   font-size: 14px;
   color: #a1a1aa;
   text-transform: uppercase;
@@ -189,9 +188,9 @@ html, body, #root {
 }
 
 .palette-tile {
-  background: #27272a;
-  border: 2px solid #52525b;
-  padding: 6px;
+  background: #4d3c2338;
+  border: 2px solid #ffd7a94b;
+  padding: 5px;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -199,7 +198,7 @@ html, body, #root {
 }
 
 .palette-tile:hover, .palette-tile.active {
-  background: #3f3f46;
+  background: #4d3c2338;
   border-color: #ffffff;
 }
 

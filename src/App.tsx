@@ -10,15 +10,14 @@ interface DayLog {
   mood?: MoodType;
 }
 
-// 2. Direct mapping matching your exact file names
-// Note: Move assets to the public/ directory (e.g. public/assets/moods/happy.png) for production builds
+// 2. Asset paths pointing to public/ directory
 const moodAssets: Record<MoodType, string> = {
-  happy: "src/assets/moods/happy.png",
-  sad: "src/assets/moods/sad.png",
-  angry: "src/assets/moods/angry.png",
-  anxiety: "src/assets/moods/anxiety.png",
-  ennui: "src/assets/moods/ennui.png",
-  "in love": "src/assets/moods/in love.png",
+  happy: "/assets/moods/happy.png",
+  sad: "/assets/moods/sad.png",
+  angry: "/assets/moods/angry.png",
+  anxiety: "/assets/moods/anxiety.png",
+  ennui: "/assets/moods/ennui.png",
+  "in love": "/assets/moods/in love.png",
 };
 
 export default function App() {
@@ -37,10 +36,12 @@ export default function App() {
     setIsInfoOpen((prev) => !prev);
   };
 
-  // Close Application Button (Tauri window close)
+  // Close Button (Tauri desktop + Vercel safe check)
   const handleClose = () => {
     if (typeof window !== "undefined" && "__TAURI_METADATA__" in window) {
       getCurrentWindow().close();
+    } else {
+      console.log("Close clicked (Web environment)");
     }
   };
 
@@ -62,7 +63,7 @@ export default function App() {
       )
     );
   };
-  
+
   // Format month title dynamically
   const formattedMonth = currentDate.toLocaleString("default", {
     month: "long",
@@ -70,24 +71,32 @@ export default function App() {
   });
 
   return (
-    <div className="app-container">
+    <div
+      className="app-container"
+      style={{
+        backgroundImage: `url('/assets/ui/calendar.png')`,
+        backgroundSize: "contain",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+      }}
+    >
       <button className="icon-btn info-position" title="Info" onClick={toggleInfoMenu}>
-        <img src="src/assets/ui/info.png" alt="Info" className="pixel-art" />
+        <img src="/assets/ui/info.png" alt="Info" className="pixel-art" />
       </button>
-      
+
       <button className="icon-btn close-position" title="Close" onClick={handleClose}>
-        <img src="src/assets/ui/close.png" alt="Close" className="pixel-art" />
+        <img src="/assets/ui/close.png" alt="Close" className="pixel-art" />
       </button>
 
       <header className="pixel-header">
         <button className="icon-btn prev-position" title="Prev" onClick={handlePrevMonth}>
-          <img src="src/assets/ui/prev.png" alt="Prev" className="pixel-art"/>
+          <img src="/assets/ui/prev.png" alt="Prev" className="pixel-art" />
         </button>
 
         <h1>{formattedMonth}</h1>
-        
+
         <button className="icon-btn next-position" title="Next" onClick={handleNextMonth}>
-          <img src="src/assets/ui/next.png" alt="Next" className="pixel-art"/>
+          <img src="/assets/ui/next.png" alt="Next" className="pixel-art" />
         </button>
       </header>
 
@@ -134,7 +143,7 @@ export default function App() {
           ))}
         </div>
       </div>
-      
+
       {isInfoOpen && (
         <div className="popup-overlay" onClick={toggleInfoMenu}>
           <div className="popup-card" onClick={(e) => e.stopPropagation()}>
