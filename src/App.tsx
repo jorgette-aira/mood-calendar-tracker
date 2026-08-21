@@ -10,7 +10,7 @@ interface DayLog {
   mood?: MoodType;
 }
 
-// 2. Asset paths pointing to public/ directory
+// 2. Direct mapping to public folder assets
 const moodAssets: Record<MoodType, string> = {
   happy: "/assets/moods/happy.png",
   sad: "/assets/moods/sad.png",
@@ -38,7 +38,7 @@ export default function App() {
 
   // Close Button (Tauri desktop + Vercel safe check)
   const handleClose = () => {
-    if (typeof window !== "undefined" && "__TAURI_METADATA__" in window) {
+    if (typeof window !== "undefined" && "__TAURI_METADATA__" in (window as Record<string, unknown>)) {
       getCurrentWindow().close();
     } else {
       console.log("Close clicked (Web environment)");
